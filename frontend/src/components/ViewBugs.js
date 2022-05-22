@@ -10,7 +10,7 @@ export default function ViewBugs() {
     useEffect(() => {
     const fetchBugs = async () => {
         try{
-             const data = await fetch("/bugs");
+             const data = await fetch("/bugs/getbugs");
       const json = await data.json();
       setBugs(json)
         } catch(err){console.log(err)}
@@ -57,7 +57,7 @@ export default function ViewBugs() {
                         </td>
                         <td>
                           <button id='delete' onClick={() => {
-                            deleteBug(bug._id); navigate("/bugs", { replace: true });}} >
+                            deleteBug(bug._id); window.location.reload(true);}} >
                             Delete
                           </button>
                         </td>

@@ -28,7 +28,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 // get all bugs
-router.get("/", async (req, res) => {
+router.get("/getbugs", async (req, res) => {
   try {
     const Bugs = await Bug.find();
     console.log(Bugs);

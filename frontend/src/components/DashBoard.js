@@ -14,7 +14,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchTotalBugs = async () => {
       try {
-        const data = await fetch("/bugs");
+        const data = await fetch("/bugs/getbugs");
         const json = await data.json();
         setTotalBugs(json);
         console.log(json)
