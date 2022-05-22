@@ -57,7 +57,7 @@ export default function ViewBugs() {
                         </td>
                         <td>
                           <button id='delete' onClick={() => {
-                            deleteBug(bug._id); navigate("/bugs")}} >
+                            deleteBug(bug._id); navigate("/bugs", { replace: true });}} >
                             Delete
                           </button>
                         </td>
