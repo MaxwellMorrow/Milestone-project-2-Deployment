@@ -1,24 +1,24 @@
 import React from 'react'
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import Table from "react-bootstrap/Table";
 import { useNavigate } from 'react-router-dom';
 
 export default function ViewBugs() {
 
-     const [bugs, setBugs] = useState([]);
+  const [bugs, setBugs] = useState([]);
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchBugs = async () => {
-        try{
-             const data = await fetch("/bugs");
-      const json = await data.json();
-      setBugs(json)
-        } catch(err){console.log(err)}
-     
+      try {
+        const data = await fetch("/bugs/getbugs");
+        const json = await data.json();
+        setBugs(json)
+      } catch (err) { console.log(err) }
+
     }
-    
+
     fetchBugs();
-    }, []);
+  }, []);
 
   const deleteBug = async (id) => {
     await fetch(`/bugs/delete/${id}`, {
@@ -27,46 +27,47 @@ export default function ViewBugs() {
   };
 
 
-    let navigate = useNavigate();
-  
+  let navigate = useNavigate();
 
-    return (
-        <div><h1>ViewBugs</h1>
-           <Table>
-            <thead>
-                <tr>
-                    <th>Order</th>
-                    <th>Name</th>
-                    <th>Priority</th>
-                    <th>Details</th>
-                </tr>
-            </thead>
-            <tbody>
-                {bugs.map((bug,index)=>{
 
-                    return (
-                      <tr key={bug._id}>
-                        <td>{index}</td>
-                        <td>{bug.name}</td>
-                        <td>{bug.priority}</td>
-                        <td>{bug.details}</td>
-                        <td>
-                          <button id='edit' onClick={() => navigate(`/bugs/${bug._id}`)}>
-                            Edit
-                          </button>
-                        </td>
-                        <td>
-                          <button id='delete' onClick={() => {
-                            deleteBug(bug._id); window.location.reload(true);}} >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                })}
-            </tbody>
-           </Table>
-        </div>
-        
-    )
+  return (
+    <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", alignContent: "center", alignItems: "center" }} ><h1>ViewBugs</h1>
+      <Table striped bordered hover responsive style={{ width: "80vw" }}>
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Name</th>
+            <th>Priority</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          {bugs.map((bug, index) => {
+
+            return (
+              <tr key={bug._id}>
+                <td>{index}</td>
+                <td>{bug.name}</td>
+                <td>{bug.priority}</td>
+                <td>{bug.details}</td>
+                <td>
+                  <button id='edit' onClick={() => navigate(`/bugs/${bug._id}`)}>
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <button id='delete' onClick={() => {
+                    deleteBug(bug._id); window.location.reload(true);
+                  }} >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    </div>
+
+  )
 }
